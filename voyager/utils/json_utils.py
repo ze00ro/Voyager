@@ -147,10 +147,12 @@ def fix_and_parse_json(
     """Fix and parse JSON string"""
     try:
         json_str = json_str.replace("\t", "")
+        print("first:" + json_str)
         return json.loads(json_str)
     except json.JSONDecodeError as _:  # noqa: F841
         json_str = correct_json(json_str)
         try:
+            print("second:" + json_str)
             return json.loads(json_str)
         except json.JSONDecodeError as _:  # noqa: F841
             pass
@@ -166,6 +168,7 @@ def fix_and_parse_json(
         json_str = json_str[brace_index:]
         last_brace_index = json_str.rindex("}")
         json_str = json_str[: last_brace_index + 1]
+        print("third:" + json_str)
         return json.loads(json_str)
     except json.JSONDecodeError as e:  # noqa: F841
         # if try_to_fix_with_gpt:

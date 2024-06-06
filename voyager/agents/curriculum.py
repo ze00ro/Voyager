@@ -377,7 +377,16 @@ class CurriculumAgent:
         print(
             f"\033[31m****Curriculum Agent task decomposition****\nFinal task: {task}\033[0m"
         )
+
+        # tmp_llm = ChatOpenAI(
+        #     model_name='gpt-4o',
+        #     temperature=0.1,
+        #     request_timeout=30,
+        #     model_kwargs={"response_format": {"type": "json_object"}},
+        # )
         response = self.llm(messages).content
+        response = response.replace("```json", "")
+        response = response.replace("```", "")
         print(f"\033[31m****Curriculum Agent task decomposition****\n{response}\033[0m")
         return fix_and_parse_json(response)
 
