@@ -1,28 +1,26 @@
 import os
 from voyager import Voyager
+import shutil
 
-openai_api_key = ""
+openai_api_key = os.environ['OPENAI_API_KEY']
 
-# seed? 1392041844
-# https://github.com/MineDojo/Voyager/issues/77
+mc_port = 50495
 
-# 怎么看
-# /gamemode spectator
-# /spectate bot
-# https://github.com/MineDojo/Voyager/issues/19
-# https://github.com/MineDojo/Voyager/issues/115
-
-mc_port = 51787
+try:
+    shutil.rmtree('./tmp')
+except Exception as ex:
+    print(f"delete failed with {ex}")
+os.mkdir('./tmp')
 
 voyager = Voyager(
     mc_port=mc_port,
     openai_api_key=openai_api_key,
-    skill_library_dir="./skill_library/trial1",  # Load a learned skill library.
-    ckpt_dir="./tmp/ckpt4",
+    skill_library_dir="./skill_library/trial3",  # Load a learned skill library.
+    ckpt_dir="./tmp",
     resume=False,
 )
 
-task = "make 2 craft table then drop them on the ground"
+task = "kill three cows"
 sub_goals = voyager.decompose_task(task=task)
 
 voyager.inference(sub_goals=sub_goals)
